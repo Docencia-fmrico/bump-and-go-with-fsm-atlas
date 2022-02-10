@@ -38,6 +38,15 @@ private:
   static const int GOING_BACK = 1;
   static const int TURNING = 2;
 
+  static const int GOING_FORWARD_SPEED = 1.2;
+  static const int GOING_BACK_SPEED = -0.2;
+  static const int TURNING_SPEED = 0.3;
+  
+
+
+
+
+
   static constexpr double TURNING_TIME = 5.0;
   static constexpr double BACKING_TIME = 3.0;
 
