@@ -7,10 +7,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   roslint
+  geometry_msgs
 )
 
 catkin_package(
-CATKIN_DEPENDS roscpp std_msgs kobuki_msgs sensor_msgs
+CATKIN_DEPENDS roscpp std_msgs kobuki_msgs sensor_msgs geometry_msgs
 )
 
 include_directories(
