@@ -26,7 +26,7 @@ namespace fsm_bump_go
 void
 BumpGo::bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
 {
-  if (pressed_ = msg->PRESSED)
+  if (pressed_ == msg->PRESSED)
     pressed_ = true;
 
 }
