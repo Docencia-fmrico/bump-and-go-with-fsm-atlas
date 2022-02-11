@@ -38,6 +38,10 @@ private:
   static const int GOING_BACK = 1;
   static const int TURNING = 2;
 
+  static constexpr float GOING_FORWARD_VEL = 0.2;
+  static constexpr float TURNING_VEL = 0.5;
+  static constexpr float GOING_BACK_VEL = -0.2;
+
   static constexpr double TURNING_TIME = 5.0;
   static constexpr double BACKING_TIME = 3.0;
 
@@ -48,7 +52,7 @@ private:
   ros::Time press_ts_;
   ros::Time turn_ts_;
 
-  ros::Subscriber sub_bumber_;
+  ros::Subscriber sub_bumper_;
   ros::Publisher pub_vel_;
 };
 
