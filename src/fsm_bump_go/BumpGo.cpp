@@ -20,10 +20,7 @@
 #define TURNING_TIME 5.0
 #define BACKING_TIME 3.0
 
-class BumpGo
-{
-public:
-  BumpGo(): state_(GOING_FORWARD), pressed_(false)
+BumpGo::BumpGo(): state_(GOING_FORWARD), pressed_(false)
   {
     sub_bumber_ = n_.subscribe("mobile_base/events/bumper", 1, &BumpGo::bumperCallback,this);
     pub_vel_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 1);
@@ -31,19 +28,19 @@ public:
 
   void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
   {
-    pressed_ = msg->state;
+    pressed_ = msg->state==true;
 
     //  ...
   }
 
-  void step()
+  void BumpGo::step()
   {
     geometry_msgs::Twist cmd;
 
     switch (state_)
     {
     case GOING_FORWARD:
-      cmd.linear.x = 0.3;
+      cmd.linear.x = 0.2;
       cmd.angular.z = 0.0;
       if (pressed_)
       {
@@ -54,7 +51,7 @@ public:
       break;
 
     case GOING_BACK:
-      cmd.linear.x = -0.3;
+      cmd.linear.x = -0.2;
       cmd.angular.z = 0.0;
 
       if ((ros::Time::now() - press_ts_).toSec() > BACKING_TIME )
@@ -67,7 +64,7 @@ public:
 
     case TURNING:
       cmd.linear.x = 0.0;
-      cmd.angular.z = 0.3;
+      cmd.angular.z = 0.2;
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
         state_ = GOING_FORWARD;
@@ -78,41 +75,3 @@ public:
 
     pub_vel_.publish(cmd);
   }
-
-private:
-  ros::NodeHandle n_;
-
-  static const int GOING_FORWARD   = 0;
-  static const int GOING_BACK   = 1;
-  static const int TURNING     = 2;
-
-  int state_;
-
-  bool pressed_;
-
-  ros::Time press_ts_;
-  ros::Time turn_ts_;
-
-  ros::Subscriber sub_bumber_;
-  ros::Publisher pub_vel_;
-};
-
-
-int main(int argc, char **argv)
-{
-  ros::init(argc, argv, "bumpgo");
-
-  BumpGo bumpgo;
-
-  ros::Rate loop_rate(20);
-
-  while (ros::ok())
-  {
-    bumpgo.step();
-
-    ros::spinOnce();
-    loop_rate.sleep();
-  }
-
-  return 0;
-}
