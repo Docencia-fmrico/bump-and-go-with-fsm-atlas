@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "BumpGo_Advanced.h"
+#include "fsm_bump_go/BumpGo_Advanced.h"
 
 #include "kobuki_msgs/BumperEvent.h"
 #include "geometry_msgs/Twist.h"
@@ -26,7 +26,7 @@ BumpGo_Advanced::BumpGo_Advanced()
 : state_(GOING_FORWARD),
   pressed_(false)
 {
-  sub_bumper_ = n_.subscribe("/mobile_base/events/bumper", 1, &BumpGo::bumperCallback, this);
+  sub_bumper_ = n_.subscribe("/mobile_base/events/bumper", 1, &BumpGo_Advanced::bumperCallback, this);
   pub_vel_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",1);
 }
 
@@ -34,6 +34,7 @@ void
 BumpGo_Advanced::bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
 {
   pressed_ = msg->state==true;
+  bump_ = msg->bumper;
 }
 
 void
@@ -60,7 +61,16 @@ BumpGo_Advanced::step()
       if ((ros::Time::now() - press_ts_).toSec() > BACKING_TIME )
       {
         turn_ts_ = ros::Time::now();
-        state_ = TURNING;
+
+        if (bump_ == 0)
+        {
+            state_ = TURNING_LEFT;
+        }
+        else 
+        {
+            state_ = TURNING_RIGHT;
+        }
+        
         ROS_INFO("GOING_BACK -> TURNING");
       }
 
@@ -71,7 +81,7 @@ BumpGo_Advanced::step()
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
         state_ = GOING_FORWARD;
-        ROS_INFO("TURNING -> GOING_FORWARD");
+        ROS_INFO("TURNING_LEFT -> GOING_FORWARD");
       }
       break;
     case TURNING_RIGHT:
@@ -80,7 +90,7 @@ BumpGo_Advanced::step()
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
         state_ = GOING_FORWARD;
-        ROS_INFO("TURNING -> GOING_FORWARD");
+        ROS_INFO("TURNING_RIGHT -> GOING_FORWARD");
       }
       break;
     }
