@@ -62,7 +62,7 @@ BumpGo_Advanced::step()
       {
         turn_ts_ = ros::Time::now();
 
-        if (bump_ == 0)
+        if (bump_ == kobuki_msgs::BumperEvent::RIGHT)
         {
             state_ = TURNING_LEFT;
         }
@@ -76,7 +76,7 @@ BumpGo_Advanced::step()
 
       break;
     case TURNING_LEFT:
-      cmd.angular.z = -TURNING_VEL;
+      cmd.angular.z = TURNING_VEL;
 
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
@@ -85,7 +85,7 @@ BumpGo_Advanced::step()
       }
       break;
     case TURNING_RIGHT:
-      cmd.angular.z = TURNING_VEL;
+      cmd.angular.z = -TURNING_VEL;
 
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
