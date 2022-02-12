@@ -48,6 +48,7 @@ private:
   static constexpr double BACKING_TIME = 3.0;
 
   int state_;
+  int bump_;
 
   bool pressed_;
 

@@ -28,8 +28,9 @@ target_link_libraries(bumpgo_node ${catkin_LIBRARIES} ${PROJECT_NAME})
 
 roslint_cpp(
  src/bumpgo_node.cpp
+ src/bumpgo_nodeAdv.cpp
  src/fsm_bump_go/BumpGo.cpp
  src/fsm_bump_go/BumpGo_Advanced.cpp
  include/fsm_bump_go/BumpGo.h
- include/BumpGo_Advanced.h
+ include/fsm_bump_go/BumpGo_Advanced.h
 )
