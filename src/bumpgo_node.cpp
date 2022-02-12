@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "fsm_bump_go/BumpGo.h"
+//#include "fsm_bump_go/BumpGo.h"
+#include "BumpGo_Advanced.h"
 
 #include "ros/ros.h"
 
@@ -20,7 +21,8 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "fsm_bump_go");
 
-  fsm_bump_go::BumpGo fsm_bump_go;
+  //fsm_bump_go::BumpGo fsm_bump_go;
+  fsm_bump_go::BumpGo_Advanced fsm_bump_go;
 
   ros::Rate loop_rate(20);
   while (ros::ok())
