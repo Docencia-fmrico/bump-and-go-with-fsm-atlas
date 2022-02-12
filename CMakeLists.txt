@@ -25,6 +25,9 @@ add_library(${PROJECT_NAME}
 
 add_executable(bumpgo_node src/bumpgo_node.cpp)
 target_link_libraries(bumpgo_node ${catkin_LIBRARIES} ${PROJECT_NAME})
+add_executable(bumpgo_nodeAdv src/bumpgo_nodeAdv.cpp)
+target_link_libraries(bumpgo_nodeAdv ${catkin_LIBRARIES} ${PROJECT_NAME})
+
 
 roslint_cpp(
  src/bumpgo_node.cpp
