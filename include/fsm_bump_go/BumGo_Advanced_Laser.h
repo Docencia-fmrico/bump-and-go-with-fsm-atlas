@@ -18,18 +18,18 @@
 
 #include "ros/ros.h"
 
-#include "kobuki_msgs/BumperEvent.h"
+#include "sensor_msgs/LaserScan.h"
 #include "geometry_msgs/Twist.h"
 
 namespace fsm_bump_go
 {
 
-class BumpGo_Advanced
+class BumpGo_Advanced_Laser
 {
 public:
-  BumpGo_Advanced();
+  BumpGo_Advanced_Laser();
 
-  void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg);
+  void bumperCallback(const sensor_msgs::LaserScan.h::ConstPtr& msg);
   void step();
 
 protected:
