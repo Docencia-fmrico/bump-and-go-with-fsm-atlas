@@ -24,10 +24,10 @@
 namespace fsm_bump_go
 {
 
-class BumpGo
+class BumpGo_Advanced
 {
 public:
-  BumpGo();
+  BumpGo_Advanced();
 
   void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg);
   void step();
@@ -48,6 +48,7 @@ private:
   static constexpr double BACKING_TIME = 3.0;
 
   int state_;
+  int bump_;
 
   bool pressed_;
 
