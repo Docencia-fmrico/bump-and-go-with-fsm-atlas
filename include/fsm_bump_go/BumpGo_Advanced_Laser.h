@@ -29,7 +29,7 @@ class BumpGo_Advanced_Laser
 public:
   BumpGo_Advanced_Laser();
 
-  void bumperCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
+  void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
   void step();
 
 protected:
@@ -48,14 +48,13 @@ protected:
   static constexpr double BACKING_TIME = 3.0;
 
   int state_;
-  int bump_;
 
-  bool pressed_;
+  bool detected_obs_;
 
-  ros::Time press_ts_;
+  ros::Time detected_obs_ts_;
   ros::Time turn_ts_;
 
-  ros::Subscriber sub_bumper_;
+  ros::Subscriber sub_laser_;
   ros::Publisher pub_vel_;
 };
 

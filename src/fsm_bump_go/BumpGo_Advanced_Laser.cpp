@@ -24,18 +24,20 @@ namespace fsm_bump_go
 
 BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 : state_(GOING_FORWARD),
-  pressed_(false)
+  detected_obs_(false)
 {
-  sub_bumper_ = n_.subscribe("/scan_filtered", 1, &BumpGo_Advanced_Laser::bumperCallback, this);
+  sub_laser_ = n_.subscribe("/scan_filtered", 1, &BumpGo_Advanced_Laser::laserCallback, this);
   pub_vel_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",1);
 }
 
 void
-BumpGo_Advanced_Laser::bumperCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
+BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-  pressed_ = msg->ranges[msg->ranges.size()/2]<= 0.3;
-  ROS_INFO("%f %d",msg->ranges[msg->ranges.size()/2],pressed_);
-  //bump_ = msg->bumper;
+  if (std::isfinite(msg->ranges[msg->ranges.size()/2]))
+  {
+    detected_obs_ = msg->ranges[msg->ranges.size()/2] <= 0.5;
+  }
+  ROS_INFO("%f %d",msg->ranges[msg->ranges.size()/2],detected_obs_);
 }
 
 void
@@ -48,11 +50,9 @@ BumpGo_Advanced_Laser::step()
     case GOING_FORWARD:
       cmd.linear.x = GOING_FORWARD_VEL;
 
-      if (pressed_)
+      if (detected_obs_)
       {
-        cmd.linear.x = 0.0;
-        pub_vel_.publish(cmd);
-        press_ts_ = ros::Time::now();
+        detected_obs_ts_ = ros::Time::now();
         state_ = GOING_BACK;
         ROS_INFO("GOING_FORWARD -> GOING_BACK");
       }
@@ -61,10 +61,9 @@ BumpGo_Advanced_Laser::step()
     case GOING_BACK:
       cmd.linear.x = GOING_BACK_VEL;
 
-      if ((ros::Time::now() - press_ts_).toSec() > BACKING_TIME )
+      if ((ros::Time::now() - detected_obs_ts_).toSec() > BACKING_TIME )
       {
-        cmd.linear.x = 0.0;
-        pub_vel_.publish(cmd);
+        turn_ts_ = ros::Time::now();
         state_ = TURNING_RIGHT;
         ROS_INFO("GOING_BACK -> TURNING");
       }
