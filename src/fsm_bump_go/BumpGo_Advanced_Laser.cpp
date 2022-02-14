@@ -26,15 +26,16 @@ BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 : state_(GOING_FORWARD),
   pressed_(false)
 {
-  sub_bumper_ = n_.subscribe("/mobile_base/events/bumper", 1, &BumpGo_Advanced::bumperCallback, this);
+  sub_bumper_ = n_.subscribe("/scan_filtered", 1, &BumpGo_Advanced_Laser::bumperCallback, this);
   pub_vel_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",1);
 }
 
 void
-BumpGo_Advanced_Laser::bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
+BumpGo_Advanced_Laser::bumperCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-  pressed_ = msg->ranges[msg->ranges.size()/2]>= 0.2;
-  bump_ = msg->bumper;
+  pressed_ = msg->ranges[msg->ranges.size()/2]<= 0.3;
+  ROS_INFO("%f %d",msg->ranges[msg->ranges.size()/2],pressed_);
+  //bump_ = msg->bumper;
 }
 
 void
@@ -49,6 +50,8 @@ BumpGo_Advanced_Laser::step()
 
       if (pressed_)
       {
+        cmd.linear.x = 0.0;
+        pub_vel_.publish(cmd);
         press_ts_ = ros::Time::now();
         state_ = GOING_BACK;
         ROS_INFO("GOING_FORWARD -> GOING_BACK");
@@ -60,19 +63,12 @@ BumpGo_Advanced_Laser::step()
 
       if ((ros::Time::now() - press_ts_).toSec() > BACKING_TIME )
       {
+        cmd.linear.x = 0.0;
+        pub_vel_.publish(cmd);
         state_ = TURNING_RIGHT;
         ROS_INFO("GOING_BACK -> TURNING");
       }
 
-      break;
-    case TURNING_LEFT:
-      cmd.angular.z = TURNING_VEL;
-
-      if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
-      {
-        state_ = GOING_FORWARD;
-        ROS_INFO("TURNING_LEFT -> GOING_FORWARD");
-      }
       break;
     case TURNING_RIGHT:
       cmd.angular.z = -TURNING_VEL;

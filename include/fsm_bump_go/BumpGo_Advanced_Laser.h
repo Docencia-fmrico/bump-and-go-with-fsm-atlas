@@ -29,7 +29,7 @@ class BumpGo_Advanced_Laser
 public:
   BumpGo_Advanced_Laser();
 
-  void bumperCallback(const sensor_msgs::LaserScan.h::ConstPtr& msg);
+  void bumperCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
   void step();
 
 protected:
