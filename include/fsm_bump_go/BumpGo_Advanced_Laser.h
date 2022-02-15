@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef FSM_BUMP_GO_BUMPGO_H
-#define FSM_BUMP_GO_BUMPGO_H
+#ifndef FSM_BUMP_GO_BUMPGO__ADVANCED_LASER_H
+#define FSM_BUMP_GO_BUMPGO_ADVANCED_LASER_H
 
 #include "ros/ros.h"
 
@@ -60,4 +60,4 @@ protected:
 
 }  // namespace fsm_bump_go
 
-#endif  // FSM_BUMP_GO_BUMPGO_Hprivate
+#endif  // FSM_BUMP_GO_BUMPGO_ADVANCED_LASER_H
