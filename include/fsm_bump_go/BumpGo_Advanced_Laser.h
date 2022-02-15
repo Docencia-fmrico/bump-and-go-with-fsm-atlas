@@ -13,23 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef FSM_BUMP_GO_BUMPGO_ADVANCED_H
-#define FSM_BUMP_GO_BUMPGO_ADVANCED_H
+#ifndef FSM_BUMP_GO_BUMPGO__ADVANCED_LASER_H
+#define FSM_BUMP_GO_BUMPGO_ADVANCED_LASER_H
 
 #include "ros/ros.h"
 
-#include "kobuki_msgs/BumperEvent.h"
+#include "sensor_msgs/LaserScan.h"
 #include "geometry_msgs/Twist.h"
 
 namespace fsm_bump_go
 {
 
-class BumpGo_Advanced
+class BumpGo_Advanced_Laser
 {
 public:
-  BumpGo_Advanced();
+  BumpGo_Advanced_Laser();
 
-  void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg);
+  void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
   void step();
 
 protected:
@@ -48,17 +48,16 @@ protected:
   static constexpr double BACKING_TIME = 3.0;
 
   int state_;
-  int bump_;
 
-  bool pressed_;
+  bool detected_obs_;
 
-  ros::Time press_ts_;
+  ros::Time detected_obs_ts_;
   ros::Time turn_ts_;
 
-  ros::Subscriber sub_bumper_;
+  ros::Subscriber sub_laser_;
   ros::Publisher pub_vel_;
 };
 
 }  // namespace fsm_bump_go
 
-#endif  // FSM_BUMP_GO_BUMPGO_Hprivate
+#endif  // FSM_BUMP_GO_BUMPGO_ADVANCED_LASER_H
