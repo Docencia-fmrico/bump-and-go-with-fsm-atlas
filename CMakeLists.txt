@@ -22,22 +22,27 @@ add_library(${PROJECT_NAME}
   src/fsm_bump_go/BaseClass.cpp
   src/fsm_bump_go/BumpGo.cpp
   src/fsm_bump_go/BumpGo_Advanced.cpp
+  src/fsm_bump_go/BumpGo_Advanced_Laser.cpp
 )
 
 add_executable(bumpgo_node src/bumpgo_node.cpp)
 target_link_libraries(bumpgo_node ${catkin_LIBRARIES} ${PROJECT_NAME})
 add_executable(bumpgo_nodeAdv src/bumpgo_nodeAdv.cpp)
 target_link_libraries(bumpgo_nodeAdv ${catkin_LIBRARIES} ${PROJECT_NAME})
-
+add_executable(bumpgo_nodeAdvLas src/bumpgo_nodeAdvLas.cpp)
+target_link_libraries(bumpgo_nodeAdvLas ${catkin_LIBRARIES} ${PROJECT_NAME})
 
 roslint_cpp(
  src/bumpgo_node.cpp
  src/bumpgo_nodeAdv.cpp
+ src/bumpgo_nodeAdvLas.cpp
  src/fsm_bump_go/BaseClass.cpp
  src/fsm_bump_go/BumpGo.cpp
  src/fsm_bump_go/BumpGo_Advanced.cpp
+ src/fsm_bump_go/BumpGo_Advanced_Laser.cpp
  include/fsm_bump_go/BaseClass.h
  include/fsm_bump_go/BumpGo.h
  include/fsm_bump_go/BumpGo_Advanced.h
+ include/fsm_bump_go/BumpGo_Advanced_Laser.h
 
 )
