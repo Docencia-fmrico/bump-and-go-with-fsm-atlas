@@ -22,13 +22,13 @@ namespace fsm_bump_go
 BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 : BaseClass::BaseClass()
 {
-  sub_laser_ = n_.subscribe("/scan_filtered", 100, &BumpGo_Advanced_Laser::laserCallback, this);
+  sub_laser_ = n_.subscribe("/scan_filtered", 700, &BumpGo_Advanced_Laser::laserCallback, this);
 }
 
 void
 BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-  //front_obstacle = msg->ranges[msg->ranges.size()/2] <= 0.5;
+  front_obstacle = msg->ranges[msg->ranges.size()/2] <= 0.5;
   left_obstacle = msg->ranges[msg->ranges.size()/4] <= 0.5;
   right_obstacle = msg->ranges[msg->ranges.size()-msg->ranges.size()/4] <= 0.5;
 
