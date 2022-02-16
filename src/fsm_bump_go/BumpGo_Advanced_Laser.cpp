@@ -22,20 +22,19 @@ namespace fsm_bump_go
 BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 : BaseClass::BaseClass()
 {
-  sub_laser_ = n_.subscribe("/scan_filtered", 1, &BumpGo_Advanced_Laser::laserCallback, this);
+  sub_laser_ = n_.subscribe("/scan_filtered", 100, &BumpGo_Advanced_Laser::laserCallback, this);
 }
 
 void
 BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
+  //front_obstacle = msg->ranges[msg->ranges.size()/2] <= 0.5;
+  left_obstacle = msg->ranges[msg->ranges.size()/4] <= 0.5;
+  right_obstacle = msg->ranges[msg->ranges.size()-msg->ranges.size()/4] <= 0.5;
+
+  detected_obs_ = front_obstacle || right_obstacle || left_obstacle;
   
-   if (std::isfinite(msg->ranges[msg->ranges.size()/2]))
-  {
-    detected_obs_ = msg->ranges[msg->ranges.size()/2] <= 0.5;
-  }
-  
-  ROS_INFO("%f %d",msg->ranges[msg->ranges.size()/2],detected_obs_);
-  
+  ROS_INFO("%f %d %d",msg->ranges[msg->ranges.size()-msg->ranges.size()/4],detected_obs_,right_obstacle);
 }
 
 }  // namespace fsm_bump_go

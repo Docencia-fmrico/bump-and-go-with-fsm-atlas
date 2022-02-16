@@ -46,6 +46,7 @@ protected:
   bool detected_obs_;
   bool front_obstacle;
   bool right_obstacle;
+  bool left_obstacle;
 
   ros::Time detected_obs_ts_;
   ros::Time turn_ts_;
