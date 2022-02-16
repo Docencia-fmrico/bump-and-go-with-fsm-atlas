@@ -22,10 +22,9 @@ int main(int argc, char **argv)
 
   fsm_bump_go::BumpGo_Advanced_Laser fsm_bump_go;
 
-  ros::Rate loop_rate(5);
+  ros::Rate loop_rate(20);
   while (ros::ok())
   {
-    fsm_bump_go.step();
 
     ros::spinOnce();
     loop_rate.sleep();

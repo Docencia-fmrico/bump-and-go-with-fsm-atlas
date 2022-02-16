@@ -28,9 +28,21 @@ BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 void
 BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-  float nearest_obs_d = msg->ranges[0]; 
+  left_obstacle = false;
+  right_obstacle = false;
+  front_obstacle = false;
+
+  const int range_min= msg->ranges.size()/4;
+  const int range_max = msg->ranges.size()-msg->ranges.size()/4;
+  const int range_front_min = msg->ranges.size() - msg->ranges.size()/12;
+  const int range_front_max = msg->ranges.size()/12;
+
+
+
+  
+  float nearest_obs_d = msg->ranges[range_min]; 
   int n = 0;
-  for (int i = 0; i < msg->ranges.size(); i++)
+  for (int i = 0; i < range_max; i++)
   {
     if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > 0)
     {
@@ -41,26 +53,27 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
 
   if (std::isfinite(msg->ranges[n]) && msg->ranges[n] > 0)
   {
-    detected_obs_ = msg->ranges[n] <= 0.5;
+    detected_obs_ = msg->ranges[n] <= 0.4;
   }
 
   if (detected_obs_)
   {
-    if (n > 200 && n < msg->ranges.size()/2-250) 
+    if (n > range_front_max && n < range_max) 
     {
       left_obstacle = true;
     }
-    else if (n < msg->ranges.size()-201 && n > msg->ranges.size()/2+250)
+    else if (n > range_min && n < range_front_min)
     {
       right_obstacle = true;
     }
-    else 
+    else if (n > range_front_min && n < range_front_max)
     {
       front_obstacle = true;
     }
   }
   
-  ROS_INFO("%d %d %d",left_obstacle,right_obstacle,detected_obs_);
+
+  ROS_INFO("%d %d %d %d %d", n,left_obstacle,right_obstacle,front_obstacle, detected_obs_);
 }
 
 }  // namespace fsm_bump_go
