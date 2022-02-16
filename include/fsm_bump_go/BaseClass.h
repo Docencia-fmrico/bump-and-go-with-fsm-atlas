@@ -40,7 +40,7 @@ protected:
   static constexpr float TURNING_VEL = 0.5;
 
   static constexpr double TURNING_TIME = 5.0;
-  static constexpr double BACKING_TIME = 3.0;
+  static constexpr double BACKING_TIME = 0.7;
 
   int state_;
   bool detected_obs_;
