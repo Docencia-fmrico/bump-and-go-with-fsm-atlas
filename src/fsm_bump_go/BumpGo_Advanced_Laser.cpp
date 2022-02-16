@@ -22,7 +22,7 @@ namespace fsm_bump_go
 BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 : BaseClass::BaseClass()
 {
-  sub_laser_ = n_.subscribe("/scan_filtered", 700, &BumpGo_Advanced_Laser::laserCallback, this);
+  sub_laser_ = n_.subscribe("/scan_filtered", 100, &BumpGo_Advanced_Laser::laserCallback, this);
 }
 
 void
