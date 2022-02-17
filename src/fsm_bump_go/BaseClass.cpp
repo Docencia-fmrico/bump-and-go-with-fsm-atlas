@@ -40,7 +40,7 @@ BaseClass::step()
 
       if (detected_obs_)
       {
-        ROS_INFO("%d %d %d",left_obstacle,right_obstacle,detected_obs_);
+        
         detected_obs_ts_ = ros::Time::now();
         state_ = GOING_BACK;
         ROS_INFO("GOING_FORWARD -> GOING_BACK");
@@ -52,7 +52,7 @@ BaseClass::step()
       
       if ((ros::Time::now() - detected_obs_ts_).toSec() > BACKING_TIME )
       {
-        ROS_INFO("%d %d %d",left_obstacle,right_obstacle,detected_obs_);
+        
         turn_ts_ = ros::Time::now();
 
         if (right_obstacle)
