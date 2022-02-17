@@ -11,8 +11,8 @@ Para realizar los ejecicios hemos programado una maquina de estados que va a ava
 Es importante saber que el laser es 360º y que por ende vamos a tener que filtrar las medidas que realmente nos interesen. Ademas vamos a heredar la maquina de estados de la clase Bumpandgo_Advanced para el Bumpandgo_advancedLaser ya que lo unico que vamos  a necesitar cambiar realmente es el topic al que vamos a estar subscritos(bumpero o laser) y por ende las condiciones que van a cambiar cada estado de la maquina.
 
 Importante cambiar los links.
-Para ver el video 1 sobre el sensor de presencia, pulsa [aqui](https://drive.google.com/file/d/1eGHyPk4TzpwS6tXNx0YoAtnOmYzHVtVp/view?usp=sharing).
-Para ver el video 2 sobre el sensor de presencia, pulsa [aqui](https://drive.google.com/file/d/1b3hyRx6AsqsTvuRgkNGxKWlDZyfwUoql/view?usp=sharing).
-Para ver el video 3 sobre el sensor de presencia, pulsa [aqui](https://drive.google.com/file/d/1b3hyRx6AsqsTvuRgkNGxKWlDZyfwUoql/view?usp=sharing).
+Para ver el funcionamiento de basic_bumpandgo, pulsa [aqui](https://drive.google.com/file/d/1eGHyPk4TzpwS6tXNx0YoAtnOmYzHVtVp/view?usp=sharing).
+Para ver el funcionamiento de advanced_bumpandgo, pulsa [aqui](https://drive.google.com/file/d/1b3hyRx6AsqsTvuRgkNGxKWlDZyfwUoql/view?usp=sharing).
+Para ver el funcionamiento de advanced_laser, pulsa [aqui](https://drive.google.com/file/d/1b3hyRx6AsqsTvuRgkNGxKWlDZyfwUoql/view?usp=sharing).
 
 Para cualquier duda escribidnos por git.
