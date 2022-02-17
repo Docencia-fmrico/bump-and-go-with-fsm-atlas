@@ -57,12 +57,12 @@ BaseClass::step()
 
         if (right_obstacle)
         {
-            ROS_INFO("Traza111111111111111111111111111111111111");
+         
             state_ = TURNING_LEFT;
         }
         else if (left_obstacle || front_obstacle )
         {
-            ROS_INFO("Traza222222222222222222222222222222222222");
+           
             state_ = TURNING_RIGHT;
         }
         
