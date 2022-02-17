@@ -31,6 +31,7 @@ void
 BaseClass::step()
 {
   geometry_msgs::Twist cmd;
+  
 
   switch (state_)
   {
@@ -48,7 +49,7 @@ BaseClass::step()
       break;
     case GOING_BACK:
       cmd.linear.x = GOING_BACK_VEL;
-
+      
       if ((ros::Time::now() - detected_obs_ts_).toSec() > BACKING_TIME )
       {
         ROS_INFO("%d %d %d",left_obstacle,right_obstacle,detected_obs_);
@@ -59,7 +60,7 @@ BaseClass::step()
             ROS_INFO("Traza111111111111111111111111111111111111");
             state_ = TURNING_LEFT;
         }
-        else if (left_obstacle)
+        else if (left_obstacle || front_obstacle )
         {
             ROS_INFO("Traza222222222222222222222222222222222222");
             state_ = TURNING_RIGHT;

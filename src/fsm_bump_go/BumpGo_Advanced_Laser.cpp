@@ -22,20 +22,16 @@ namespace fsm_bump_go
 BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 : BaseClass::BaseClass()
 {
-  sub_laser_ = n_.subscribe("/scan_filtered", 100, &BumpGo_Advanced_Laser::laserCallback, this);
+  sub_laser_ = n_.subscribe("/scan_filtered", 1, &BumpGo_Advanced_Laser::laserCallback, this);
 }
 
 void
 BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-  left_obstacle = false;
-  right_obstacle = false;
-  front_obstacle = false;
-
   const int range_max= msg->ranges.size()/4;
   const int range_min = msg->ranges.size()-msg->ranges.size()/4;
-  const int range_front_min = msg->ranges.size() - msg->ranges.size()/12;
-  const int range_front_max = msg->ranges.size()/12;
+  const int range_front_min = msg->ranges.size() - msg->ranges.size()/16;
+  const int range_front_max = msg->ranges.size()/16;
 
 
 
@@ -52,6 +48,7 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
 
   if (std::isfinite(msg->ranges[n]) && msg->ranges[n] > 0)
   {
+
     detected_obs_ = msg->ranges[n] <= 0.4;
 
   }
@@ -62,23 +59,27 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
     if (n > range_front_max && n < range_max) 
     {
       right_obstacle = true;
-      ROS_INFO("Derecha %d", right_obstacle);
-
+      left_obstacle = false;
+      front_obstacle = false;
+    
     }
     else if (n > range_min  && n < range_front_min)
     {
       left_obstacle = true;
-      ROS_INFO("Izquierda %d", left_obstacle);
+      right_obstacle = false;
+      front_obstacle = false;
       
     }
     else if (n > range_front_min || n < range_front_max)
     {
       front_obstacle = true; 
-      ROS_INFO("Delante %d", front_obstacle);   
+      left_obstacle = false;
+      right_obstacle = false;
+      
     }
   }
   
-  ROS_INFO(" %ld %d %d %d %d %d",msg->ranges.size(),n,left_obstacle,right_obstacle,front_obstacle, detected_obs_);
+  ROS_INFO(" %ld %f %d %d %d %d %d",msg->ranges.size(),msg->ranges[n],n,left_obstacle,right_obstacle,front_obstacle, detected_obs_);
 }
 
 }  // namespace fsm_bump_go
