@@ -12,31 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef FSM_BUMP_GO_BUMPGO_ADVANCED_H
-#define FSM_BUMP_GO_BUMPGO_ADVANCED_H
-
-#include "fsm_bump_go/BaseClass.h"
+#include "fsm_bump_go/BumpGo_Advanced_Laser.h"
 
 #include "ros/ros.h"
 
-#include "kobuki_msgs/BumperEvent.h"
-
-namespace fsm_bump_go
+int main(int argc, char **argv)
 {
+  ros::init(argc, argv, "fsm_bump_go");
 
-class BumpGo_Advanced : public fsm_bump_go::BaseClass
-{
-public:
-  BumpGo_Advanced();
+  fsm_bump_go::BumpGo_Advanced_Laser fsm_bump_go;
 
-  void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg);
+  ros::Rate loop_rate(20);
+  while (ros::ok())
+  {
+    fsm_bump_go.step();
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
 
-private:
-  int bump_;
-
-  ros::Subscriber sub_bumper_;
-};
-
-}  // namespace fsm_bump_go
-
-#endif  // FSM_BUMP_GO_BUMPGO_ADVANCED_H
+  return 0;
+}
