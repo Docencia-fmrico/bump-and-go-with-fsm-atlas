@@ -31,6 +31,6 @@ Dejamos aquí unos videos del funcionamiento de cada uno de los programas:
 
 Aqui podréis ver de forma grafica el por que de los rangos que hemos usado para las mediciones del laser:
 
--[Imagen_rangos](https://github.com/Docencia-fmrico/bump-and-go-with-fsm-atlas/blob/main/laser.jpg):
+-[Imagen_rangos](https://github.com/Docencia-fmrico/bump-and-go-with-fsm-atlas/blob/main/laser.jpg).
 
 Para cualquier duda escribidnos por git.
