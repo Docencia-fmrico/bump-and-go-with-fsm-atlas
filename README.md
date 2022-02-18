@@ -23,7 +23,9 @@ para quedarnos con las posiciones que nos interesan.
 Dejamos aquí unos videos del funcionamiento de cada uno de los programas:
 
 -basic_bumpandgo, pulsa [aqui](https://drive.google.com/file/d/1GnxpmbcihN2C3uI69yehvSQSALo0_TUO/view?usp=sharing). 
+
 -advanced_bumpandgo, pulsa [aqui](https://drive.google.com/file/d/1Ezp-X9_mWszJ-PYYbqp3Tguup_katKey/view?usp=sharing). 
+
 -advanced_laser, pulsa [aqui](https://drive.google.com/file/d/1THWqhBqXEmvrdnSB0w2TBFtgH_1oeeKy/view?usp=sharing). 
 
 Para cualquier duda escribidnos por git.
