@@ -35,7 +35,8 @@ public:
 private:  
   ros::Subscriber sub_laser_;
   
-  float const DETECTED_OBS_DISTANCE = 0.4;
+  float const RANGE_MAX_DETECTED = 0.3;
+  float const RANGE_MIN_DETECTED = 0.2;
 };
 
 }  // namespace fsm_bump_go

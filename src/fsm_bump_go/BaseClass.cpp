@@ -22,7 +22,7 @@ namespace fsm_bump_go
 {
 
 BaseClass::BaseClass()
-: state_(GOING_FORWARD), detected_obs_(false)
+: state_(GOING_FORWARD), detected_obs_(false), left_obstacle_(false), right_obstacle_(false)
 {
   pub_vel_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",1);
 }
@@ -53,11 +53,11 @@ BaseClass::step()
       {
         turn_ts_ = ros::Time::now();
 
-        if (right_obstacle)
+        if (right_obstacle_)
         {
             state_ = TURNING_LEFT;
         }
-        else if (left_obstacle || front_obstacle )
+        else
         {
             state_ = TURNING_RIGHT;
         }

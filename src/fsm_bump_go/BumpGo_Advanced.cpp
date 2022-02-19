@@ -31,9 +31,8 @@ BumpGo_Advanced::bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
   bump_ = msg->bumper;
   detected_obs_ = msg->state == kobuki_msgs::BumperEvent::PRESSED;
 
-  front_obstacle = bump_ == kobuki_msgs::BumperEvent::CENTER;
-  right_obstacle = bump_ == kobuki_msgs::BumperEvent::RIGHT;
-  left_obstacle = bump_ == kobuki_msgs::BumperEvent::LEFT;
+  right_obstacle_ = bump_ == kobuki_msgs::BumperEvent::RIGHT;
+  left_obstacle_ = bump_ == kobuki_msgs::BumperEvent::LEFT;
 }
 
 }  // namespace fsm_bump_go

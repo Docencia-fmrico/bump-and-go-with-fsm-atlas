@@ -28,62 +28,28 @@ BumpGo_Advanced_Laser::BumpGo_Advanced_Laser()
 void
 BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-  const int RANGE_MAX = msg->ranges.size()/4;
-  const int RANGE_MIN = msg->ranges.size()-msg->ranges.size()/4;
-  const int RANGE_FRONT_MIN = msg->ranges.size() - msg->ranges.size()/16;
-  const int RANGE_FRONT_MAX = msg->ranges.size()/16;
-
-
-  float nearest_obs_d = msg->ranges[RANGE_MIN]; 
-  int n = 0;
-  for (int i = 0; i <= RANGE_MAX; i++)
+  float nearest_obs_d = msg->ranges[0]; 
+  int index = 0;
+  for (int i = 1; i < msg->ranges.size()-1; i++)
   {
-    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > 0)
+    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > RANGE_MIN_DETECTED)
     {
       nearest_obs_d = msg->ranges[i];
-      n = i;
+      index = i;
     }
   }
 
-  for (int i = msg->ranges.size()-1; i >= RANGE_MIN; i--)
-  {
-    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > 0)
-    {
-      nearest_obs_d = msg->ranges[i];
-      n = i;
-    }
-  }
-
-  if (std::isfinite(msg->ranges[n]) && msg->ranges[n] > 0)
-  {
-    detected_obs_ = msg->ranges[n] <= DETECTED_OBS_DISTANCE;
-  }
-
+  detected_obs_ = nearest_obs_d > RANGE_MIN_DETECTED && nearest_obs_d < RANGE_MAX_DETECTED;
+  
   if (detected_obs_)
   {
-    if (n > RANGE_FRONT_MAX && n < RANGE_MAX) 
-    {
-      right_obstacle = true;
-      left_obstacle = false;
-      front_obstacle = false;
-    
-    }
-    else if (n > RANGE_MIN  && n < RANGE_FRONT_MIN)
-    {
-      left_obstacle = true;
-      right_obstacle = false;
-      front_obstacle = false;
-      
-    }
-    else if (n > RANGE_FRONT_MIN || n < RANGE_FRONT_MAX)
-    {
-      front_obstacle = true; 
-      left_obstacle = false;
-      right_obstacle = false;
-      
-    }
+    float angle_detected_obs_ = msg->angle_min + msg->angle_increment*index;
+
+    left_obstacle_ = angle_detected_obs_ < msg->angle_min/2 && angle_detected_obs_ > 0;
+    right_obstacle_ = angle_detected_obs_ < 0 && angle_detected_obs_ > msg->angle_max/2;
   }
-  
+
+  //ROS_INFO("%d %d", left_obstacle_, right_obstacle_);
 }
 
 }  // namespace fsm_bump_go

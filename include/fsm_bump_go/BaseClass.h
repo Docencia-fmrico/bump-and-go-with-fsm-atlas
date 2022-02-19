@@ -39,14 +39,13 @@ protected:
   static constexpr float GOING_BACK_VEL = -0.2;
   static constexpr float TURNING_VEL = 0.5;
 
-  static constexpr double TURNING_TIME = 5.0;
+  static constexpr double TURNING_TIME = 3.0;
   static constexpr double BACKING_TIME = 1.5;
 
   int state_;
   bool detected_obs_;
-  bool front_obstacle;
-  bool right_obstacle;
-  bool left_obstacle;
+  bool right_obstacle_;
+  bool left_obstacle_;
 
   ros::Time detected_obs_ts_;
   ros::Time turn_ts_;
