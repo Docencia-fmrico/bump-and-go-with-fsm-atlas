@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="fsm_bump_go" type="bumpgo_nodeAdvLas" name="Subscriber" output="screen"/> 
+</launch>
