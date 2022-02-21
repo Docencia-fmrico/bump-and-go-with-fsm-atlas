@@ -1,3 +1,5 @@
 <launch>
-	<node pkg="fsm_bump_go" type="bumpgo_nodeAdv" name="Subscriber" output="screen"/> 
+
+	<node pkg="fsm_bump_go" type="bumpgo_nodeAdv" name="Laser" output="screen"/> 
+	
 </launch>
