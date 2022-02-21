@@ -35,8 +35,8 @@ public:
 private:  
   ros::Subscriber sub_laser_;
   
-  float const RANGE_MAX_DETECTED = 0.3;
-  float const RANGE_MIN_DETECTED = 0.2;
+  static constexpr float RANGE_MAX_DETECTED = 0.4;
+  static constexpr float RANGE_MIN_DETECTED = 0.2;
 };
 
 }  // namespace fsm_bump_go
