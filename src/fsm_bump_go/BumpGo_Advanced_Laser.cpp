@@ -16,6 +16,8 @@
 
 #include "sensor_msgs/LaserScan.h"
 
+#define PI 3.14159265
+
 namespace fsm_bump_go
 {
 
@@ -33,7 +35,7 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
   
   for (int i = 1; i < msg->ranges.size(); i++)
   {
-    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > RANGE_MIN_DETECTED)
+    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > RANGE_MIN_DETECTED && msg->ranges[i] < RANGE_MAX_DETECTED)
     {
       nearest_obs_d = msg->ranges[i];
       n_reading = i+1;
