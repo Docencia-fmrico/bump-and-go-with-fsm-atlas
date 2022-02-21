@@ -12,29 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "fsm_bump_go/BaseClass.h"
+#include "fsm_bump_go/BaseClassAdvance.h"
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 
 namespace fsm_bump_go
 {
 
-BaseClass::BaseClass()
+BaseClassAdvance::BaseClassAdvance()
 : state_(GOING_FORWARD), detected_obs_(false)
 {
   pub_vel_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",1);
+  pub_led1_ = n_.advertise<kobuki_msgs::Led>("/mobile_base/commands/led1", 1);
 }
 
 void
-BaseClass::step()
+BaseClassAdvance::step()
 {
   geometry_msgs::Twist cmd;
-  
+  kobuki_msgs::Led led;
 
   switch (state_)
   {
     case GOING_FORWARD:
       cmd.linear.x = GOING_FORWARD_VEL;
+      led.value = LED_AMARILLO;
+      pub_led1_.publish(led);
 
       if (detected_obs_)
       {
@@ -46,6 +49,8 @@ BaseClass::step()
       break;
     case GOING_BACK:
       cmd.linear.x = GOING_BACK_VEL;
+      led.value = LED_AZUL; 
+      pub_led1_.publish(led);
       
       if ((ros::Time::now() - detected_obs_ts_).toSec() > BACKING_TIME )
       {
@@ -66,6 +71,8 @@ BaseClass::step()
       break;
     case TURNING_LEFT:
       cmd.angular.z = TURNING_VEL;
+      led.value = LED_ROJO; 
+      pub_led1_.publish(led);
 
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
@@ -75,6 +82,8 @@ BaseClass::step()
       break;
     case TURNING_RIGHT:
       cmd.angular.z = -TURNING_VEL;
+      led.value = LED_VERDE; 
+      pub_led1_.publish(led);
 
       if ((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
       {
