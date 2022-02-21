@@ -19,8 +19,9 @@
 
 #include "ros/ros.h"
 
-
 #include "sensor_msgs/LaserScan.h"
+
+#define PI 3.14159265
 
 namespace fsm_bump_go
 {
@@ -37,6 +38,9 @@ private:
   
   static constexpr float RANGE_MAX_DETECTED = 0.4;
   static constexpr float RANGE_MIN_DETECTED = 0.2;
+
+  static constexpr float ANGLE_MIN_DETECTED = 2*PI/3;
+  static constexpr float ANGLE_MAX_DETECTED = -2*PI/3;
 };
 
 }  // namespace fsm_bump_go

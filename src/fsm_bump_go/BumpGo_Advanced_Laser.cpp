@@ -16,8 +16,6 @@
 
 #include "sensor_msgs/LaserScan.h"
 
-#define PI 3.14159265
-
 namespace fsm_bump_go
 {
 
@@ -46,8 +44,8 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
 
   if (nearest_obs_d < RANGE_MAX_DETECTED)
   {
-    left_obstacle_ = angle_obs > 2*PI/3 && angle_obs > 0;
-    right_obstacle_ = angle_obs < 0 && angle_obs < -2*PI/3;
+    left_obstacle_ = angle_obs > ANGLE_MIN_DETECTED && angle_obs > 0;
+    right_obstacle_ = angle_obs < 0 && angle_obs < ANGLE_MAX_DETECTED;
     detected_obs_ = left_obstacle_ || right_obstacle_;
   }
 
@@ -55,9 +53,6 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
   {
     detected_obs_ = false;
   }
-
-  ROS_INFO("%d %d %f %d", left_obstacle_, right_obstacle_, angle_obs, n_reading-1);
-  //ROS_INFO("%f %f", msg->angle_min, msg->angle_max);
 }
 
 }  // namespace fsm_bump_go
