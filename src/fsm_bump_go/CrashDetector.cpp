@@ -23,7 +23,7 @@ CrashDetector::CrashDetector()
 : detected_obs_bumper(false), detected_obs_security_area(false)
 {
   sub_bumper_ = n_.subscribe("/mobile_base/events/bumper", 1, &CrashDetector::BumperCallback, this);
-  sub_laser_ = n_.subscribe("/scan", 1, &CrashDetector::LaserCallback, this);
+  sub_laser_ = n_.subscribe("/scan_filtered", 1, &CrashDetector::LaserCallback, this);
 }
 
 void CrashDetector::BumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)

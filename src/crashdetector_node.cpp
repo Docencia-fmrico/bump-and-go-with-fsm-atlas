@@ -25,7 +25,10 @@ int main(int argc, char **argv)
   ros::Rate loop_rate(20);
   while (ros::ok())
   {
-    ROS_INFO("%d",fsm_bump_go.position_array_nearest_object);
+    if(fsm_bump_go.detected_obs_bumper)
+      ROS_INFO("%d",fsm_bump_go.sector_detected_bumper);
+    if(fsm_bump_go.detected_obs_security_area)
+      ROS_INFO("%d , %f", fsm_bump_go.sector_detected_laser, fsm_bump_go.nearest_obs_d);
     ros::spinOnce();
     loop_rate.sleep();
   }

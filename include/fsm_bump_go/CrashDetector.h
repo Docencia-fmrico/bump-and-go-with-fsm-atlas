@@ -43,7 +43,7 @@ public:
 private:
   ros::NodeHandle n_;
 
-  const float SECURE_DISTANCE_LASER = 0.3;
+  const float SECURE_DISTANCE_LASER = 0.4;
 
   int bumper_msg;
 
