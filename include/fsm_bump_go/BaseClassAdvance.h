@@ -20,7 +20,7 @@
 namespace fsm_bump_go
 {
 
-class BaseClass
+class BaseClassAdvance
 {
 public:
   BaseClass();
