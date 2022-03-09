@@ -36,7 +36,7 @@ public:
 private:  
   ros::Subscriber sub_laser_;
   
-  static constexpr float RANGE_MAX_DETECTED = 0.4;
+  static constexpr float RANGE_MAX_DETECTED = 0.5;
   static constexpr float RANGE_MIN_DETECTED = 0.2;
 
   static constexpr float ANGLE_MIN_DETECTED = 2*PI/3;

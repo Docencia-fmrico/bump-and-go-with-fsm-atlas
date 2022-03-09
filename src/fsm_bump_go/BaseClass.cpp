@@ -32,6 +32,8 @@ BaseClass::step()
 {
   geometry_msgs::Twist cmd;
   
+  bool left_obs = left_obstacle_;
+  bool right_obs = right_obstacle_;
 
   switch (state_)
   {
@@ -40,6 +42,7 @@ BaseClass::step()
 
       if (detected_obs_)
       {
+        ROS_INFO("%d %d", left_obs, right_obs);
         detected_obs_ts_ = ros::Time::now();
         state_ = GOING_BACK;
         ROS_INFO("GOING_FORWARD -> GOING_BACK");
@@ -53,7 +56,8 @@ BaseClass::step()
       {
         turn_ts_ = ros::Time::now();
 
-        if (right_obstacle_)
+        ROS_INFO("%d %d", left_obs, right_obs);
+        if (right_obs)
         {
             state_ = TURNING_LEFT;
         }

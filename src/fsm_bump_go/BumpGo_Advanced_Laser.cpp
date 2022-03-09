@@ -35,17 +35,18 @@ BumpGo_Advanced_Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg
   
   for (int i = 1; i < msg->ranges.size(); i++)
   {
-    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > RANGE_MIN_DETECTED && msg->ranges[i] < RANGE_MAX_DETECTED)
+    if (msg->ranges[i] < nearest_obs_d && msg->ranges[i] > RANGE_MIN_DETECTED)
     {
       nearest_obs_d = msg->ranges[i];
       n_reading = i+1;
     }
   }
-  
-  float angle_obs = msg->angle_min + msg->angle_increment*n_reading;
+
 
   if (nearest_obs_d < RANGE_MAX_DETECTED)
   {
+    float angle_obs = msg->angle_min + msg->angle_increment*n_reading;
+    
     left_obstacle_ = angle_obs > ANGLE_MIN_DETECTED && angle_obs > 0;
     right_obstacle_ = angle_obs < 0 && angle_obs < ANGLE_MAX_DETECTED;
     detected_obs_ = left_obstacle_ || right_obstacle_;
